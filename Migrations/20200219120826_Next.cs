@@ -2,7 +2,7 @@
 
 namespace MvcAuthNBlog.Migrations
 {
-    public partial class SecondMigration : Migration
+    public partial class Next : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

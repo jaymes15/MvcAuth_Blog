@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MvcAuthNBlog.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Authorusername : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

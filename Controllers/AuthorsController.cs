@@ -46,6 +46,7 @@ namespace MvcAuthNBlog.Controllers
         // GET: Authors/Create
         public IActionResult Create()
         {
+           
             return View();
         }
 
@@ -54,8 +55,10 @@ namespace MvcAuthNBlog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Author_FirstName,Author_LastName")] Author author)
+        public async Task<IActionResult> Create( [Bind("ID,Author_FirstName,Author_LastName")] Author author)
         {
+           
+
             if (ModelState.IsValid)
             {
                 _context.Add(author);

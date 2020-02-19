@@ -8,7 +8,7 @@ namespace MvcAuthNBlog.Models
     public class Blog
     {
         public int ID { get; set; }
-        public int AuthorID { get; set; }
+        public string AuthorID { get; set; }
 
         public string ArticleCategory { get; set; }
         public string ArticleTitle { get; set; }

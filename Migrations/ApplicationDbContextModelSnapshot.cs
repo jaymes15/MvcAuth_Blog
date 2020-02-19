@@ -253,7 +253,10 @@ namespace MvcAuthNBlog.Migrations
                     b.Property<string>("ArticleTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AuthorID")
+                    b.Property<string>("AuthorID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("AuthorID1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublishDate")
@@ -261,7 +264,7 @@ namespace MvcAuthNBlog.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AuthorID");
+                    b.HasIndex("AuthorID1");
 
                     b.ToTable("Blog");
                 });
@@ -321,9 +324,7 @@ namespace MvcAuthNBlog.Migrations
                 {
                     b.HasOne("MvcAuthNBlog.Models.Author", "Author")
                         .WithMany("Blog")
-                        .HasForeignKey("AuthorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorID1");
                 });
 #pragma warning restore 612, 618
         }

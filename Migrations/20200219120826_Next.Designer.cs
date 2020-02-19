@@ -10,8 +10,8 @@ using MvcAuthNBlog.Data;
 namespace MvcAuthNBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200218112054_AuthorIdtype")]
-    partial class AuthorIdtype
+    [Migration("20200219120826_Next")]
+    partial class Next
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -255,7 +255,10 @@ namespace MvcAuthNBlog.Migrations
                     b.Property<string>("ArticleTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AuthorID")
+                    b.Property<string>("AuthorID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("AuthorID1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublishDate")
@@ -263,7 +266,7 @@ namespace MvcAuthNBlog.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AuthorID");
+                    b.HasIndex("AuthorID1");
 
                     b.ToTable("Blog");
                 });
@@ -323,9 +326,7 @@ namespace MvcAuthNBlog.Migrations
                 {
                     b.HasOne("MvcAuthNBlog.Models.Author", "Author")
                         .WithMany("Blog")
-                        .HasForeignKey("AuthorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorID1");
                 });
 #pragma warning restore 612, 618
         }

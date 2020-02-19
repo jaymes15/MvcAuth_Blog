@@ -10,8 +10,8 @@ using MvcAuthNBlog.Data;
 namespace MvcAuthNBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200218111018_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20200219120348_Authorusername")]
+    partial class Authorusername
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
