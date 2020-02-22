@@ -35,6 +35,8 @@ namespace MvcAuthNBlog
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+         
+
           
             
         }

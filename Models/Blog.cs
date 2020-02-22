@@ -9,12 +9,11 @@ namespace MvcAuthNBlog.Models
     {
         public int ID { get; set; }
         public string AuthorID { get; set; }
-
-        public string ArticleCategory { get; set; }
         public string ArticleTitle { get; set; }
         public string ArticlePost { get; set; }
         public DateTime PublishDate { get; set; }
 
-        public Author Author { get; set; }
+        //public int ArticleCategory { get; set; }
+        public  virtual Category Category { get; set; }
     }
 }

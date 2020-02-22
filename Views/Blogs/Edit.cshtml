@@ -14,14 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <!-- <label asp-for="AuthorID" class="control-label"></label>-->
-                <input type="hidden" asp-for="AuthorID" class="form-control" />
+                <label asp-for="AuthorID" class="control-label"></label>
+                <input asp-for="AuthorID" class="form-control" />
                 <span asp-validation-for="AuthorID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ArticleCategory" class="control-label"></label>
-                <input asp-for="ArticleCategory" class="form-control" />
-                <span asp-validation-for="ArticleCategory" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ArticleTitle" class="control-label"></label>

@@ -219,33 +219,12 @@ namespace MvcAuthNBlog.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MvcAuthNBlog.Models.Author", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Author_FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Author_LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Author");
-                });
-
             modelBuilder.Entity("MvcAuthNBlog.Models.Blog", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ArticleCategory")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ArticlePost")
                         .HasColumnType("nvarchar(max)");
@@ -256,7 +235,7 @@ namespace MvcAuthNBlog.Migrations
                     b.Property<string>("AuthorID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AuthorID1")
+                    b.Property<int?>("CategoryID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublishDate")
@@ -264,9 +243,24 @@ namespace MvcAuthNBlog.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AuthorID1");
+                    b.HasIndex("CategoryID");
 
                     b.ToTable("Blog");
+                });
+
+            modelBuilder.Entity("MvcAuthNBlog.Models.Category", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -322,9 +316,9 @@ namespace MvcAuthNBlog.Migrations
 
             modelBuilder.Entity("MvcAuthNBlog.Models.Blog", b =>
                 {
-                    b.HasOne("MvcAuthNBlog.Models.Author", "Author")
-                        .WithMany("Blog")
-                        .HasForeignKey("AuthorID1");
+                    b.HasOne("MvcAuthNBlog.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID");
                 });
 #pragma warning restore 612, 618
         }

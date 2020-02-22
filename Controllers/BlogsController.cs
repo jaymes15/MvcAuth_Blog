@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -24,10 +22,7 @@ namespace MvcAuthNBlog.Controllers
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); will give the user's userId
-            //var userName = User.FindFirstValue(ClaimTypes.Name); will give the user's userName
-           // ViewData["userid"] = userName;
-            return View(await _context.Blog.ToListAsync());
+            return View(await _context.Blog.Include( c => c.Category).ToListAsync());
         }
 
         // GET: Blogs/Details/5
@@ -49,11 +44,8 @@ namespace MvcAuthNBlog.Controllers
         }
 
         // GET: Blogs/Create
-        [Authorize]
         public IActionResult Create()
         {
-            var userName = User.FindFirstValue(ClaimTypes.Name); //will give the user's userName
-            ViewData["userid"] = userName;
             return View();
         }
 
@@ -62,8 +54,7 @@ namespace MvcAuthNBlog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Create([Bind("ID,AuthorID,ArticleCategory,ArticleTitle,ArticlePost,PublishDate")] Blog blog)
+        public async Task<IActionResult> Create([Bind("ID,AuthorID,ArticleTitle,ArticlePost,PublishDate")] Blog blog)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +66,6 @@ namespace MvcAuthNBlog.Controllers
         }
 
         // GET: Blogs/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,8 +86,7 @@ namespace MvcAuthNBlog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,AuthorID,ArticleCategory,ArticleTitle,ArticlePost,PublishDate")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,AuthorID,ArticleTitle,ArticlePost,PublishDate")] Blog blog)
         {
             if (id != blog.ID)
             {
@@ -128,7 +117,6 @@ namespace MvcAuthNBlog.Controllers
         }
 
         // GET: Blogs/Delete/5
-        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -149,7 +137,6 @@ namespace MvcAuthNBlog.Controllers
         // POST: Blogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var blog = await _context.Blog.FindAsync(id);

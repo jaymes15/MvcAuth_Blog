@@ -12,12 +12,11 @@
 <table class="table">
     <thead>
         <tr>
-           
             <th>
                 @Html.DisplayNameFor(model => model.AuthorID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArticleCategory)
+                @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ArticleTitle)
@@ -38,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.AuthorID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ArticleCategory)
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ArticleTitle)

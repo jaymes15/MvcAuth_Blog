@@ -13,8 +13,17 @@ namespace MvcAuthNBlog.Data
             : base(options)
         {
         }
-
+        
         public DbSet<Blog> Blog { get; set; }
-        public DbSet<Author> Author { get; set; }
+        public DbSet<Category> Category { get; set; }
+        /*public DbSet<BlogCategory> BlogCategory { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BlogCategory>().HasKey(pt => new { pt.BlogId, pt.CategoryId });
+            modelBuilder.Entity<BlogCategory>().HasOne(pt => pt.Blog).WithMany(pt =>BlogCategory).HasForeignKey(p=>p.BlogId);
+            modelBuilder.Entity<BlogCategory>().HasOne(pt => pt.Category).WithMany(pt => BlogCategory).HasForeignKey(p => p.CategoryId);
+
+        }*/
     }
 }
