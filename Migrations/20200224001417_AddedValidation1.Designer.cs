@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcAuthNBlog.Data;
 
 namespace MvcAuthNBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200224001417_AddedValidation1")]
+    partial class AddedValidation1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,34 +271,6 @@ namespace MvcAuthNBlog.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("MvcAuthNBlog.Models.Comment", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BlogCommentID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CommentAuthorID")
-                        .HasColumnType("varchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("CommentPost")
-                        .IsRequired()
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<DateTime>("PublishDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("BlogCommentID");
-
-                    b.ToTable("Comment");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -353,13 +327,6 @@ namespace MvcAuthNBlog.Migrations
                     b.HasOne("MvcAuthNBlog.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryID");
-                });
-
-            modelBuilder.Entity("MvcAuthNBlog.Models.Comment", b =>
-                {
-                    b.HasOne("MvcAuthNBlog.Models.Blog", "BlogComment")
-                        .WithMany()
-                        .HasForeignKey("BlogCommentID");
                 });
 #pragma warning restore 612, 618
         }

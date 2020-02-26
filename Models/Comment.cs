@@ -7,28 +7,20 @@ using System.Threading.Tasks;
 
 namespace MvcAuthNBlog.Models
 {
-    public class Blog
+    public class Comment
     {
-        public int ID { get; set; }
-
-      
+        public int id { get; set; }
         [MaxLength(200)]
         [Column(TypeName = "varchar(200)")]
-        public string AuthorID { get; set; }
-
-        [Required]
-        [MaxLength(500)]
-        [Column(TypeName = "varchar(500)")]
-        public string ArticleTitle { get; set; }
+        public string CommentAuthorID { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(500)")]
-        public string ArticlePost { get; set; }
+        public string CommentPost { get; set; }
 
         [Required]
         public DateTime PublishDate { get; set; }
 
-        //public int ArticleCategory { get; set; }
-        public  virtual Category Category { get; set; }
+        public virtual Blog BlogComment { get; set; }
     }
 }

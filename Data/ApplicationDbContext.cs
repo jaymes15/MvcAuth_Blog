@@ -16,6 +16,8 @@ namespace MvcAuthNBlog.Data
         
         public DbSet<Blog> Blog { get; set; }
         public DbSet<Category> Category { get; set; }
+
+        public DbSet<Comment> Comment { get; set; }
         /*public DbSet<BlogCategory> BlogCategory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

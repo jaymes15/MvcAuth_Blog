@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +28,7 @@ namespace MvcAuthNBlog.Controllers
         }
 
         // GET: Blogs/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,15 +36,68 @@ namespace MvcAuthNBlog.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blog
+            Blog blog = await _context.Blog
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (blog == null)
             {
                 return NotFound();
             }
-
-            return View(blog);
+            BlogCommentViewModel viewModel = await GetBlogCommentViewModelFromBlog(blog);
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); will give the user's userId
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            ViewData["userid"] = userName;
+            return View(viewModel);
         }
+
+
+        private async Task<BlogCommentViewModel> GetBlogCommentViewModelFromBlog(Blog blog)
+        {
+            BlogCommentViewModel viewModel = new BlogCommentViewModel();
+            viewModel.Blog = blog;
+            List<Comment> comments = await _context.Comment
+                .Where(m => m.BlogComment == blog).ToListAsync();
+            viewModel.Comments = comments;
+            return viewModel;
+
+        }
+
+
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Details([Bind("BlogID,CommentAuthorID,CommentPost,PublishDate")] BlogCommentViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Comment comment = new Comment();
+                comment.CommentAuthorID = viewModel.CommentAuthorID;
+                comment.CommentPost = viewModel.CommentPost;
+                comment.PublishDate = viewModel.PublishDate;
+
+
+               Blog blog= await _context.Blog
+               .SingleOrDefaultAsync(m => m.ID == viewModel.BlogID);
+
+                if (blog == null)
+                {
+                    return NotFound();
+                }
+
+                comment.BlogComment = blog;
+                _context.Comment.Add(comment);
+                await _context.SaveChangesAsync();
+
+                viewModel = await GetBlogCommentViewModelFromBlog(blog);
+
+            }
+            return View(viewModel);
+        }
+
+
+
+
+
 
         // GET: Blogs/Create
         public IActionResult Create()
